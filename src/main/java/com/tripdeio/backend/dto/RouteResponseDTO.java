@@ -1,20 +1,18 @@
 package com.tripdeio.backend.dto;
 
-import com.tripdeio.backend.entity.Attraction;
-
 import java.util.List;
 
 public class RouteResponseDTO {
     private double distance; // in meters
     private long duration;   // in seconds
-    private List<Attraction> places;
+    private List<AttractionResponseDTO> attractions;
     private String polyline;
 
     // Constructors
-    public RouteResponseDTO(double distance, long duration, List<Attraction> places, String polyline) {
+    public RouteResponseDTO(double distance, long duration, List<AttractionResponseDTO> attractions, String polyline) {
         this.distance = distance;
         this.duration = duration;
-        this.places = places;
+        this.attractions = attractions;
         this.polyline = polyline;
     }
 
@@ -34,12 +32,12 @@ public class RouteResponseDTO {
         this.duration = duration;
     }
 
-    public List<Attraction> getPlaces() {
-        return places;
+    public List<AttractionResponseDTO> getAttractions() {
+        return attractions;
     }
 
-    public void setPlaces(List<Attraction> places) {
-        this.places = places;
+    public void setAttractions(List<AttractionResponseDTO> attractionResponseDTOS) {
+        this.attractions = attractionResponseDTOS;
     }
 
     public String getPolyline() {

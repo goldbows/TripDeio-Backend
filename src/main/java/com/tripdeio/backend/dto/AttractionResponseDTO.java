@@ -1,6 +1,6 @@
 package com.tripdeio.backend.dto;
 
-import com.tripdeio.backend.entity.Attraction;
+import java.util.List;
 
 public class AttractionResponseDTO {
     private Long id;
@@ -8,15 +8,15 @@ public class AttractionResponseDTO {
     private String description;
     private double lat;
     private double lng;
+    private List<AttractionImageDTO> images;
 
-    public static AttractionResponseDTO fromEntity(Attraction attraction) {
-        AttractionResponseDTO dto = new AttractionResponseDTO();
-        dto.setId(attraction.getId());
-        dto.setName(attraction.getName());
-        dto.setDescription(attraction.getDescription());
-        dto.setLat(attraction.getLat());
-        dto.setLng(attraction.getLng());
-        return dto;
+    public AttractionResponseDTO (Long id, String name, String description, double lat, double lng, List<AttractionImageDTO> images) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.lat = lat;
+        this.lng = lng;
+        this.images = images;
     }
 
     public Long getId() {
@@ -57,6 +57,14 @@ public class AttractionResponseDTO {
 
     public void setLng(double lng) {
         this.lng = lng;
+    }
+
+    public List<AttractionImageDTO> getImages() {
+        return images;
+    }
+
+    public void setImages(List<AttractionImageDTO> images) {
+        this.images = images;
     }
 }
 

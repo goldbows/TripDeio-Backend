@@ -236,3 +236,5 @@ INSERT INTO attraction (name, description, lat, lng, submitted_by, approved) VAL
 ('Koneswaram Temple', 'A historic Hindu temple in Trincomalee, perched on a cliff with stunning ocean views.', 8.5822, 81.2450, 1, true),
 ('Nallur Kandaswamy Kovil', 'A vibrant Hindu temple in Jaffna, known for its towering gopuram and cultural festivals.', 9.6735, 80.0295, 1, true),
 ('Gangaramaya Temple', 'A striking Buddhist temple in Colombo, blending Sri Lankan, Thai, and Chinese architectural styles.', 6.9167, 79.8567, 1, true);
+
+ALTER TABLE public.attraction ALTER COLUMN description TYPE varchar(1000) USING description::varchar(1000);
