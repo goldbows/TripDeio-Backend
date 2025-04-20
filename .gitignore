@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/resources/map/sri-lanka-latest.osm.pbf
