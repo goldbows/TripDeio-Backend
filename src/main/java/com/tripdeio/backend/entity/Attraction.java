@@ -23,6 +23,8 @@ public class Attraction {
     private String description;
     private Double lat;
     private Double lng;
+    private Integer visitDurationMinutes;
+    private Double ticketPrice;
     private Boolean approved = false;
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -104,5 +106,21 @@ public class Attraction {
 
     public void setImages(List<AttractionImage> images) {
         this.images = images;
+    }
+
+    public Integer getVisitDurationMinutes() {
+        return visitDurationMinutes;
+    }
+
+    public void setVisitDurationMinutes(Integer visitDurationMinutes) {
+        this.visitDurationMinutes = visitDurationMinutes;
+    }
+
+    public Double getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(Double ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 }
