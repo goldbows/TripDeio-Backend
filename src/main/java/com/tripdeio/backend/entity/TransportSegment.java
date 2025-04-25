@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -16,6 +17,7 @@ public class TransportSegment {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "itinerary_id")
     private Itinerary itinerary;
 
     @Column(name = "from_stop_id")
@@ -25,6 +27,7 @@ public class TransportSegment {
     private Long toStopId;
 
     @ManyToOne
+    @JoinColumn(name = "transport_method_id")
     private TransportMethod transportMethod;
 
     @Column(name = "estimated_minutes")

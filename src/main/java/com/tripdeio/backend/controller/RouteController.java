@@ -14,13 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/route")
 public class RouteController {
     @Autowired
-    private AttractionRepository attractionRepo;
+    private AttractionRepository attractionRepository;
 
-    private final RouteService routeService;
-
-    public RouteController(RouteService routeService) {
-        this.routeService = routeService;
-    }
+    @Autowired
+    private RouteService routeService;
 
     @GetMapping("/nearby-route")
     public ResponseEntity<RouteResponseDTO> getAttractionsNearRoute(

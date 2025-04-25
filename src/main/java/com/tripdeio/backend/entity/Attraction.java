@@ -1,8 +1,9 @@
 package com.tripdeio.backend.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-
+import org.locationtech.jts.geom.Point;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,6 +36,10 @@ public class Attraction {
     @OneToMany(mappedBy = "attraction", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<AttractionImage> images;
+
+    @Column(columnDefinition = "geometry(Point, 4326)")
+    @JsonBackReference
+    private Point geom;
 
     public Long getId() {
         return id;
@@ -122,5 +127,13 @@ public class Attraction {
 
     public void setTicketPrice(Double ticketPrice) {
         this.ticketPrice = ticketPrice;
+    }
+
+    public Point getGeom() {
+        return geom;
+    }
+
+    public void setGeom(Point geom) {
+        this.geom = geom;
     }
 }

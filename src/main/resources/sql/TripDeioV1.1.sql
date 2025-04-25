@@ -544,3 +544,6 @@ CREATE TABLE city (
   description TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE public.attraction_image ALTER COLUMN image_url TYPE varchar(500) USING image_url::varchar(500);
+

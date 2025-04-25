@@ -2,6 +2,7 @@ package com.tripdeio.backend.controller;
 
 import com.tripdeio.backend.dto.ItineraryDTO;
 import com.tripdeio.backend.service.ItineraryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,14 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/itinerary")
+@RequestMapping("/itinerary")
 public class ItineraryController {
 
-    private final ItineraryService itineraryService;
-
-    public ItineraryController(ItineraryService itineraryService) {
-        this.itineraryService = itineraryService;
-    }
+    @Autowired
+    private ItineraryService itineraryService;
 
     @PostMapping("/generate")
     public ResponseEntity<ItineraryDTO> generateItinerary(
