@@ -11,18 +11,18 @@ import java.util.Arrays;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
     @Value("${cors.allowed-origins}")
-    private String[] allowedOrigins;
+    private String allowedOrigins;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins(allowedOrigins.split(","))
                 .allowedMethods("*")
                 .allowedHeaders("*");
     }
 
     @PostConstruct
     public void logCorsOrigins() {
-        System.out.println("Allowed CORS origins: " + Arrays.toString(allowedOrigins));
+        System.out.println("Allowed CORS origins: " + Arrays.toString(allowedOrigins.split(",")));
     }
 }
