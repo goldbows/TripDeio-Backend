@@ -19,6 +19,12 @@ public class AttractionImage {
     @JsonBackReference
     private Attraction attraction;
 
+    private Boolean approved = false;
+
+    @ManyToOne
+    @JoinColumn(name = "uploaded_by")
+    private AppUser uploadedBy;
+
     public Long getId() {
         return id;
     }
@@ -41,5 +47,21 @@ public class AttractionImage {
 
     public void setAttraction(Attraction attraction) {
         this.attraction = attraction;
+    }
+
+    public Boolean getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+
+    public AppUser getUploadedBy() {
+        return uploadedBy;
+    }
+
+    public void setUploadedBy(AppUser uploadedBy) {
+        this.uploadedBy = uploadedBy;
     }
 }

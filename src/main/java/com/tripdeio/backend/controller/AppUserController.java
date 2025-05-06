@@ -1,8 +1,5 @@
 package com.tripdeio.backend.controller;
 
-import com.tripdeio.backend.dto.LoginRequest;
-import com.tripdeio.backend.dto.LoginResponse;
-import com.tripdeio.backend.dto.SignupRequest;
 import com.tripdeio.backend.entity.AppUser;
 import com.tripdeio.backend.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,31 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/app-user")
 public class AppUserController {
 
     @Autowired
     private AppUserService appUserService;
-
-    @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody SignupRequest signupRequest) {
-        try {
-            appUserService.signup(signupRequest);
-            return ResponseEntity.ok("User registered successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        try {
-            LoginResponse loginResponse = appUserService.login(loginRequest);
-            return ResponseEntity.ok(loginResponse);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new LoginResponse(null, false, e.getMessage()));
-        }
-    }
 
     @GetMapping("/admin/users")
     @PreAuthorize("hasRole('ADMIN')")

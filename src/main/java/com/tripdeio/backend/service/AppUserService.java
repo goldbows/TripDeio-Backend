@@ -1,15 +1,12 @@
 package com.tripdeio.backend.service;
 
-import com.tripdeio.backend.dto.LoginRequest;
-import com.tripdeio.backend.dto.LoginResponse;
 import com.tripdeio.backend.dto.SignupRequest;
 import com.tripdeio.backend.entity.AppUser;
 import com.tripdeio.backend.repository.AppUserRepository;
-import com.tripdeio.backend.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -26,9 +23,6 @@ public class AppUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JwtService jwtService;
-
     private static final String ENCRYPTION_KEY = "aB3dF5hJ7kM9nP2rT4vW6yZ8cE1gI4kL";
     private static final String INIT_VECTOR = "1234567890123456";
 
@@ -43,31 +37,17 @@ public class AppUserService {
         return new String(original);
     }
 
-    public LoginResponse login(LoginRequest loginRequest) throws Exception {
-        AppUser user = appUserRepository.findByEmail(loginRequest.getEmail());
-        if (user == null) {
-            throw new RuntimeException("Email or Password is incorrect");
-        }
-
-        if (!user.getPasswordHash().equals(loginRequest.getPassword())) {
-            throw new RuntimeException("Email or Password is incorrect");
-        }
-
-        String token = jwtService.generateToken(user.getEmail(), user.isAdmin());
-        return new LoginResponse(token, user.isAdmin());
-    }
-
-    public AppUser signup(SignupRequest signupRequest) throws Exception {
-        if (appUserRepository.findByEmail(signupRequest.getEmail()) != null) {
+    public void signup(SignupRequest signupRequest) throws Exception {
+        if (appUserRepository.findByEmail(signupRequest.getEmail()).isPresent()) {
             throw new RuntimeException("Email already exists");
         }
         AppUser user = new AppUser();
         user.setUsername(signupRequest.getUsername());
         user.setEmail(signupRequest.getEmail());
-        String decryptedPassword = decryptPassword(signupRequest.getPassword());
-        user.setPasswordHash(passwordEncoder.encode(decryptedPassword));
+        String hashedPassword = passwordEncoder.encode(signupRequest.getPassword());
+        user.setPasswordHash(hashedPassword);
         user.setAdmin(false);
-        return appUserRepository.save(user);
+        appUserRepository.save(user);
     }
 
     public List<AppUser> getAllUsers() {
@@ -79,5 +59,9 @@ public class AppUserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.setAdmin(isAdmin);
         appUserRepository.save(user);
+    }
+
+    public AppUser findByEmail(String email) {
+        return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 }

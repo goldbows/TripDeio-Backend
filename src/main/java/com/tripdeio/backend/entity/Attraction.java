@@ -41,6 +41,10 @@ public class Attraction {
     @JsonBackReference
     private Point geom;
 
+    private LocalDateTime lastModifiedAt = LocalDateTime.now();
+
+    private Boolean edited = false;
+
     public Long getId() {
         return id;
     }
@@ -135,5 +139,21 @@ public class Attraction {
 
     public void setGeom(Point geom) {
         this.geom = geom;
+    }
+
+    public LocalDateTime getLastModifiedAt() {
+        return lastModifiedAt;
+    }
+
+    public void setLastModifiedAt(LocalDateTime lastModifiedAt) {
+        this.lastModifiedAt = lastModifiedAt;
+    }
+
+    public Boolean getEdited() {
+        return edited;
+    }
+
+    public void setEdited(Boolean edited) {
+        this.edited = edited;
     }
 }
