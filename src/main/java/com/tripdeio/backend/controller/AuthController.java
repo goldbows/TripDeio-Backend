@@ -1,8 +1,10 @@
 package com.tripdeio.backend.controller;
 
+import com.tripdeio.backend.dto.AppUserDTO;
 import com.tripdeio.backend.dto.LoginRequest;
 import com.tripdeio.backend.dto.LoginResponse;
 import com.tripdeio.backend.dto.SignupRequest;
+import com.tripdeio.backend.entity.AppUser;
 import com.tripdeio.backend.security.JwtTokenProvider;
 import com.tripdeio.backend.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +56,10 @@ public class AuthController {
 
             String token = jwtTokenProvider.generateToken(loginRequest.getEmail(), isAdmin);
 
-            return ResponseEntity.ok(new LoginResponse(token, isAdmin, null));
+            AppUser user = appUserService.findByEmail(loginRequest.getEmail());
+            AppUserDTO userDto = new AppUserDTO(user.getId(), user.getUsername(), user.getEmail(), user.isAdmin());
+
+            return ResponseEntity.ok(new LoginResponse(token, isAdmin, null, userDto));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new LoginResponse(null, false, "Invalid credentials"));
         }
