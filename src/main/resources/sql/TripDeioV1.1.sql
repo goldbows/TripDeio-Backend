@@ -547,3 +547,4 @@ CREATE TABLE city (
 
 ALTER TABLE public.attraction_image ALTER COLUMN image_url TYPE varchar(500) USING image_url::varchar(500);
 
+ALTER TABLE city ADD COLUMN submitted_by INTEGER REFERENCES app_user(id);

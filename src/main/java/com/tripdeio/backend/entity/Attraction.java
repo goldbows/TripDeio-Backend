@@ -2,16 +2,10 @@ package com.tripdeio.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import com.tripdeio.backend.entity.enums.AttractionStatus;
+import jakarta.persistence.*;
 import org.locationtech.jts.geom.Point;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,13 +14,18 @@ public class Attraction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String description;
     private Double lat;
     private Double lng;
     private Integer visitDurationMinutes;
     private Double ticketPrice;
-    private Boolean approved = false;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AttractionStatus status = AttractionStatus.PENDING;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
@@ -43,7 +42,12 @@ public class Attraction {
 
     private LocalDateTime lastModifiedAt = LocalDateTime.now();
 
-    private Boolean edited = false;
+    @ManyToOne
+    @JoinColumn(name = "original_id")
+    private Attraction originalAttraction;
+
+    @ManyToOne
+    private AppUser approvedBy;
 
     public Long getId() {
         return id;
@@ -85,12 +89,28 @@ public class Attraction {
         this.lng = lng;
     }
 
-    public Boolean getApproved() {
-        return approved;
+    public Integer getVisitDurationMinutes() {
+        return visitDurationMinutes;
     }
 
-    public void setApproved(Boolean approved) {
-        this.approved = approved;
+    public void setVisitDurationMinutes(Integer visitDurationMinutes) {
+        this.visitDurationMinutes = visitDurationMinutes;
+    }
+
+    public Double getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(Double ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
+
+    public AttractionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AttractionStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -117,22 +137,6 @@ public class Attraction {
         this.images = images;
     }
 
-    public Integer getVisitDurationMinutes() {
-        return visitDurationMinutes;
-    }
-
-    public void setVisitDurationMinutes(Integer visitDurationMinutes) {
-        this.visitDurationMinutes = visitDurationMinutes;
-    }
-
-    public Double getTicketPrice() {
-        return ticketPrice;
-    }
-
-    public void setTicketPrice(Double ticketPrice) {
-        this.ticketPrice = ticketPrice;
-    }
-
     public Point getGeom() {
         return geom;
     }
@@ -149,11 +153,19 @@ public class Attraction {
         this.lastModifiedAt = lastModifiedAt;
     }
 
-    public Boolean getEdited() {
-        return edited;
+    public Attraction getOriginalAttraction() {
+        return originalAttraction;
     }
 
-    public void setEdited(Boolean edited) {
-        this.edited = edited;
+    public void setOriginalAttraction(Attraction originalAttraction) {
+        this.originalAttraction = originalAttraction;
+    }
+
+    public AppUser getApprovedBy() {
+        return approvedBy;
+    }
+
+    public void setApprovedBy(AppUser approvedBy) {
+        this.approvedBy = approvedBy;
     }
 }

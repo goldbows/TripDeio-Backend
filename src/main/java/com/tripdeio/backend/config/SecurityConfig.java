@@ -75,8 +75,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/route/**",
-                                "/attraction/all",
-                                "/city/all",
+                                "/attraction/**",
+                                "/city/**",
                                 "/app-user/**",
                                 "/transport-method/all",
                                 "/uploads/**",

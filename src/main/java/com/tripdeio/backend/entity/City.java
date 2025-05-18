@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -31,6 +33,14 @@ public class City {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "submitted_by")
+    private AppUser submittedBy;
+
+    private Boolean approved = false;
+
+    private Boolean edited = false;
 
     public Long getId() {
         return id;
@@ -86,5 +96,13 @@ public class City {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public AppUser getSubmittedBy() {
+        return submittedBy;
+    }
+
+    public void setSubmittedBy(AppUser submittedBy) {
+        this.submittedBy = submittedBy;
     }
 }
