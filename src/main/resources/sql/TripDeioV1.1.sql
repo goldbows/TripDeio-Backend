@@ -548,3 +548,38 @@ CREATE TABLE city (
 ALTER TABLE public.attraction_image ALTER COLUMN image_url TYPE varchar(500) USING image_url::varchar(500);
 
 ALTER TABLE city ADD COLUMN submitted_by INTEGER REFERENCES app_user(id);
+
+CREATE TYPE attraction_status AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'REPLACED');
+
+ALTER TABLE attraction ADD COLUMN status attraction_status;
+
+UPDATE attraction
+SET status = CASE
+    WHEN approved = true THEN 'APPROVED'::attraction_status
+    ELSE 'PENDING'::attraction_status
+END;
+
+
+ALTER TABLE attraction
+ALTER COLUMN status SET NOT NULL,
+ALTER COLUMN status SET DEFAULT 'PENDING';
+
+
+ALTER TABLE attraction DROP COLUMN approved;
+
+ALTER TABLE city ADD COLUMN status attraction_status;
+
+update city set status = 'APPROVED';
+
+ALTER TABLE city
+ALTER COLUMN status SET NOT NULL,
+ALTER COLUMN status SET DEFAULT 'PENDING';
+
+ALTER TABLE public.city ALTER COLUMN status TYPE varchar(255) USING status::varchar(255);
+
+ALTER TABLE public.transport_method RENAME TO transport_mode;
+
+ALTER TABLE public.transport_segment DROP COLUMN itinerary_id;
+
+ALTER TABLE public.transport_segment RENAME COLUMN transport_method_id TO transport_mode_id;
+

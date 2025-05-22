@@ -36,7 +36,6 @@ public class AttractionService {
      */
     public Attraction createAttraction(AttractionDTO attractionDTO) {
         AppUser currentUser = securityUtil.getCurrentUserId();
-        Long userId = currentUser.getId();
         Attraction attraction = new Attraction();
         attraction.setName(attractionDTO.getName());
         attraction.setDescription(attractionDTO.getDescription());
@@ -45,11 +44,7 @@ public class AttractionService {
         attraction.setTicketPrice(attractionDTO.getTicketPrice());
         attraction.setVisitDurationMinutes(attractionDTO.getVisitDurationMinutes());
         attraction.setStatus(currentUser.isAdmin() ? AttractionStatus.APPROVED : AttractionStatus.PENDING);
-        if (userId != null) {
-            AppUser user = new AppUser();
-            user.setId(userId);
-            attraction.setSubmittedBy(user);
-        }
+        attraction.setSubmittedBy(currentUser);
         // Set geom using PostGIS
         attraction.setGeom(geometryFactory.createPoint(new Coordinate(attractionDTO.getLng(), attractionDTO.getLat())));
         return attractionRepository.save(attraction);
@@ -198,6 +193,11 @@ public class AttractionService {
     }
 
 
+    /**
+     * Delete Attraction
+     * @param attraction Attraction Entity
+     * @param dto Attraction DTO
+     */
     private void updateAttractionFields(Attraction attraction, AttractionDTO dto) {
         attraction.setName(dto.getName());
         attraction.setDescription(dto.getDescription());

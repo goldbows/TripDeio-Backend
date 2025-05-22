@@ -78,7 +78,7 @@ public class SecurityConfig {
                                 "/attraction/**",
                                 "/city/**",
                                 "/app-user/**",
-                                "/transport-method/all",
+                                "/transport-mode/**",
                                 "/uploads/**",
                                 "/api/public/**",
                                 "/error",                      // allow Spring's error page

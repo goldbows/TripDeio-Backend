@@ -1,7 +1,10 @@
 package com.tripdeio.backend.entity;
 
+import com.tripdeio.backend.entity.enums.AttractionStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,6 +34,10 @@ public class City {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AttractionStatus status = AttractionStatus.PENDING;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -38,9 +45,14 @@ public class City {
     @JoinColumn(name = "submitted_by")
     private AppUser submittedBy;
 
-    private Boolean approved = false;
+    private LocalDateTime lastModifiedAt = LocalDateTime.now();
 
-    private Boolean edited = false;
+    @ManyToOne
+    @JoinColumn(name = "original_id")
+    private City originalCity;
+
+    @ManyToOne
+    private AppUser approvedBy;
 
     public Long getId() {
         return id;
@@ -104,5 +116,37 @@ public class City {
 
     public void setSubmittedBy(AppUser submittedBy) {
         this.submittedBy = submittedBy;
+    }
+
+    public AttractionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AttractionStatus status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getLastModifiedAt() {
+        return lastModifiedAt;
+    }
+
+    public void setLastModifiedAt(LocalDateTime lastModifiedAt) {
+        this.lastModifiedAt = lastModifiedAt;
+    }
+
+    public City getOriginalCity() {
+        return originalCity;
+    }
+
+    public void setOriginalCity(City originalCity) {
+        this.originalCity = originalCity;
+    }
+
+    public AppUser getApprovedBy() {
+        return approvedBy;
+    }
+
+    public void setApprovedBy(AppUser approvedBy) {
+        this.approvedBy = approvedBy;
     }
 }

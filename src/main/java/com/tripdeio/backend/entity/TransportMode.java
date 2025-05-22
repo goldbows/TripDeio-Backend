@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class TransportMethod {
+public class TransportMode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

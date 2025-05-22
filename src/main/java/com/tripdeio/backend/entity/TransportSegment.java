@@ -16,10 +16,6 @@ public class TransportSegment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "itinerary_id")
-    private Itinerary itinerary;
-
     @Column(name = "from_stop_id")
     private Long fromStopId;
 
@@ -28,7 +24,7 @@ public class TransportSegment {
 
     @ManyToOne
     @JoinColumn(name = "transport_method_id")
-    private TransportMethod transportMethod;
+    private TransportMode transportMode;
 
     @Column(name = "estimated_minutes")
     private Integer estimatedMinutes;
@@ -51,14 +47,6 @@ public class TransportSegment {
         this.id = id;
     }
 
-    public Itinerary getItinerary() {
-        return itinerary;
-    }
-
-    public void setItinerary(Itinerary itinerary) {
-        this.itinerary = itinerary;
-    }
-
     public Long getFromStopId() {
         return fromStopId;
     }
@@ -75,12 +63,12 @@ public class TransportSegment {
         this.toStopId = toStopId;
     }
 
-    public TransportMethod getTransportMethod() {
-        return transportMethod;
+    public TransportMode getTransportMethod() {
+        return transportMode;
     }
 
-    public void setTransportMethod(TransportMethod transportMethod) {
-        this.transportMethod = transportMethod;
+    public void setTransportMethod(TransportMode transportMode) {
+        this.transportMode = transportMode;
     }
 
     public Integer getEstimatedMinutes() {

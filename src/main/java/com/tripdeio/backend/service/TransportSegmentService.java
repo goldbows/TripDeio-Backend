@@ -1,7 +1,7 @@
 package com.tripdeio.backend.service;
 
 import com.tripdeio.backend.dto.TransportSegmentDTO;
-import com.tripdeio.backend.entity.TransportMethod;
+import com.tripdeio.backend.entity.TransportMode;
 import com.tripdeio.backend.entity.TransportSegment;
 import com.tripdeio.backend.repository.TransportSegmentRepository;
 
@@ -24,7 +24,7 @@ public class TransportSegmentService {
         segment.setFromStopType(segmentDTO.getFromStopType());
         segment.setToStopType(segmentDTO.getToStopType());
         if (segmentDTO.getTransportMethodId() != null) {
-            TransportMethod method = new TransportMethod();
+            TransportMode method = new TransportMode();
             method.setId(segmentDTO.getTransportMethodId());
             segment.setTransportMethod(method);
         }

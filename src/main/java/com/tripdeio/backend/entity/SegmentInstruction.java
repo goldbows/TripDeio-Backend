@@ -29,7 +29,7 @@ public class SegmentInstruction {
 
     @ManyToOne
     @JoinColumn(name = "transport_method_id")
-    private TransportMethod transportMethod;
+    private TransportMode transportMode;
 
     @Lob
     private String instructions;
@@ -65,12 +65,12 @@ public class SegmentInstruction {
         this.toWaypoint = toWaypoint;
     }
 
-    public TransportMethod getTransportMethod() {
-        return transportMethod;
+    public TransportMode getTransportMethod() {
+        return transportMode;
     }
 
-    public void setTransportMethod(TransportMethod transportMethod) {
-        this.transportMethod = transportMethod;
+    public void setTransportMethod(TransportMode transportMode) {
+        this.transportMode = transportMode;
     }
 
     public String getInstructions() {

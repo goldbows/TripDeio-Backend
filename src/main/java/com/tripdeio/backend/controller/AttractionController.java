@@ -22,14 +22,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/attraction")
 public class AttractionController {
-    @Autowired
-    private AttractionRepository attractionRepository;
 
     @Autowired
     private AttractionService attractionService;
-
-    @Autowired
-    private AppUserService appUserService;
 
     /**
      * Create Attraction

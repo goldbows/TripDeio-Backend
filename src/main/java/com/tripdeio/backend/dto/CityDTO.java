@@ -1,11 +1,36 @@
 package com.tripdeio.backend.dto;
 
+import com.tripdeio.backend.entity.City;
+
 public class CityDTO {
+    private Long id;
     private String name;
     private Double lat;
     private Double lng;
     private String country;
     private String description;
+    private String status;
+
+    public CityDTO() {
+    }
+
+    public CityDTO(City city) {
+        this.id = city.getId();
+        this.name = city.getName();
+        this.lat = city.getLat();
+        this.lng = city.getLng();
+        this.country = city.getCountry();
+        this.description = city.getDescription();
+        this.status = city.getStatus().name();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -45,5 +70,13 @@ public class CityDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
